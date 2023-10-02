@@ -1,3 +1,4 @@
+// Using the extra space for the prefix and suffix array
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
@@ -17,6 +18,32 @@ public:
         ans[n - 1] = prefix[n - 2];
         for (int i = 1; i < n - 1; i++) {
             ans[i] = prefix[i - 1] * suffix[i + 1];
+        }
+        return ans;
+    }
+};
+
+
+
+// Without using the extra space for the prefix and suffix instead using the ans vector
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> ans(n, 0);
+        int num = 1;
+        for (int i = 0; i < n; i++) {
+            ans[i] = num;
+            num *= nums[i];
+        }
+        for (auto x : ans) {
+            cout << x << " " << endl;
+        }
+        num = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            ans[i] = num * ans[i];
+            num = num * nums[i];
         }
         return ans;
     }
